@@ -2,10 +2,11 @@
 #include <vector>
 
 // output class
+#pragma pack(push, 1)
 class RegDump
 {
 public:
-	char pad_0000[88]; //0x0000
+	__int8 pad_0000[97];
 	DWORD_PTR RBX; //0x0058
 	DWORD_PTR RSP; //0x0060
 	DWORD_PTR RDI; //0x0068
@@ -13,14 +14,17 @@ public:
 	DWORD_PTR RBP; //0x0078
 	DWORD_PTR RDX; //0x0080
 	DWORD_PTR RCX; //0x0088
+	DWORD_PTR R8; //0x0098
+	DWORD_PTR R9;
 	DWORD_PTR RAX; //0x0090
-};
 
+};
+#pragma pack(pop)
 class RegHook {
 private:
 	static std::vector<RegHook*> HookInstances;
 	DWORD_PTR FuncAddress;
-	size_t lengthOfInstructions;
+	size_t lengthOfInstructions = 0;
 	DWORD_PTR HookedAddress = 0;
 	byte toFixPatch[60];
 	bool CreateHookV6();
